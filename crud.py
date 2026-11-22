@@ -52,3 +52,22 @@ def cadastrar_livro():
         return
 
     genero = dados.GENEROS[opcao_genero - 1]
+
+    print("\nEstados de conservação:")
+
+    for indice, estado in enumerate(dados.ESTADOS_CONSERVACAO, start=1):
+        print(f"{indice} - {estado}")
+
+    opcao_estado = input("Escolha o estado de conservação: ")
+
+    if not opcao_estado.isdigit():
+        print("Erro: escolha uma opção numérica.")
+        return
+
+    opcao_estado = int(opcao_estado)
+
+    if opcao_estado < 1 or opcao_estado > len(dados.ESTADOS_CONSERVACAO):
+        print("Erro: estado de conservação inválido.")
+        return
+
+    estado = dados.ESTADOS_CONSERVACAO[opcao_estado - 1]
