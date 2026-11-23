@@ -55,7 +55,7 @@ def cadastrar_livro():
 
     print("\nEstados de conservação:")
 
-    for indice, estado in enumerate(dados.ESTADOS_CONSERVACAO, start=1):
+    for indice, estado in enumerate(dados.estados_conservacao, start=1):
         print(f"{indice} - {estado}")
 
     opcao_estado = input("Escolha o estado de conservação: ")
@@ -66,8 +66,50 @@ def cadastrar_livro():
 
     opcao_estado = int(opcao_estado)
 
-    if opcao_estado < 1 or opcao_estado > len(dados.ESTADOS_CONSERVACAO):
+    if opcao_estado < 1 or opcao_estado > len(dados.estados_conservacao):
         print("Erro: estado de conservação inválido.")
         return
 
-    estado = dados.ESTADOS_CONSERVACAO[opcao_estado - 1]
+    estado = dados.estados_conservacao[opcao_estado - 1] 
+    
+    try:
+        preco = float(input("Digite o preço do livro: R$ "))
+
+    except ValueError:
+        print("Erro: digite um preço válido.")
+        return
+
+    if not validar_preco(preco):
+        print("Erro: o preço deve ser maior que zero.")
+        return
+
+    try:
+        quantidade = int(input("Digite a quantidade de livros: "))
+
+    except ValueError:
+        print("Erro: digite uma quantidade válida.")
+        return
+
+    if not validar_quantidade(quantidade):
+        print("Erro: a quantidade não pode ser negativa.")
+        return
+
+    codigo = dados.proximo_codigo
+
+    livro = {
+        "codigo": codigo,
+        "titulo": titulo,
+        "autor": autor,
+        "isbn": isbn,
+        "genero": genero,
+        "estado": estado,
+        "preco": preco,
+        "quantidade": quantidade
+    }
+
+    dados.livros.append(livro)
+    dados.isbns_cadastrados.add(isbn)
+    dados.proximo_codigo += 1
+
+    print("\nLivro cadastrado com sucesso!")
+    print(f"Código do livro: {codigo}")
