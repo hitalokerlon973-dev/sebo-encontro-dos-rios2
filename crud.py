@@ -135,3 +135,36 @@ def listar_livros():
         print(f"Conservação: {livro['estado']}")
         print(f"Preço: R$ {livro['preco']:.2f}")
         print(f"Quantidade: {livro['quantidade']}")
+
+def buscar_livro():
+    """
+    Busca um livro pelo título ou ISBN.
+    """
+    print("\n--- BUSCAR LIVRO ---")
+
+    busca = input("Digite o título ou ISBN do livro: ").strip().lower()
+
+    if not busca:
+        print("Erro: digite alguma informação para buscar.")
+        return
+
+    encontrados = [
+        livro for livro in dados.livros
+        if busca in livro["titulo"].lower()
+        or busca == livro["isbn"]
+    ]
+
+    if not encontrados:
+        print("Nenhum livro encontrado.")
+        return
+
+    for livro in encontrados:
+        print("-------------------------")
+        print(f"Código: {livro['codigo']}")
+        print(f"Título: {livro['titulo']}")
+        print(f"Autor: {livro['autor']}")
+        print(f"ISBN: {livro['isbn']}")
+        print(f"Gênero: {livro['genero']}")
+        print(f"Conservação: {livro['estado']}")
+        print(f"Preço: R$ {livro['preco']:.2f}")
+        print(f"Quantidade: {livro['quantidade']}")
