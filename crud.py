@@ -113,3 +113,25 @@ def cadastrar_livro():
 
     print("\nLivro cadastrado com sucesso!")
     print(f"Código do livro: {codigo}")
+
+    
+def listar_livros():
+    """
+    Exibe todos os livros cadastrados no sistema.
+    """
+    print("\n--- LISTA DE LIVROS ---")
+
+    if not dados.livros:
+        print("Nenhum livro cadastrado.")
+        return
+
+    for livro in dados.livros:
+        print("-------------------------")
+        print(f"Código: {livro['codigo']}")
+        print(f"Título: {livro['titulo']}")
+        print(f"Autor: {livro['autor']}")
+        print(f"ISBN: {livro['isbn']}")
+        print(f"Gênero: {livro['genero']}")
+        print(f"Conservação: {livro['estado']}")
+        print(f"Preço: R$ {livro['preco']:.2f}")
+        print(f"Quantidade: {livro['quantidade']}")
