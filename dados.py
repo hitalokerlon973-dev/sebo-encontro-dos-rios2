@@ -9,6 +9,7 @@ GENEROS = (
     "Biografia",
     "Outros"
 )
+
 # Estados de conservação aceitos
 estados_conservacao = (
     "Ótimo",
@@ -16,11 +17,18 @@ estados_conservacao = (
     "Regular"
 )
 
-# Lista que armazenará os livros cadastrados
-livros = []
+# Carrega os livros salvos no JSON
+from arquivo import carregar_livros
+
+livros = carregar_livros()
 
 # Conjunto para controlar ISBNs duplicados
-isbns_cadastrados = set()
+isbns_cadastrados = {
+    livro["isbn"] for livro in livros
+}
 
-# Código inicial dos livros
-proximo_codigo = 1
+# Próximo código disponível
+proximo_codigo = max(
+    (livro["codigo"] for livro in livros),
+    default=0
+) + 1

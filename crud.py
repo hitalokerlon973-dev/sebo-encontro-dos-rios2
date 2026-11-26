@@ -1,4 +1,5 @@
 import dados
+from arquivo import salvar_livros
 
 from utils import (
     validar_texto,
@@ -110,8 +111,8 @@ def cadastrar_livro():
     dados.livros.append(livro)
     dados.isbns_cadastrados.add(isbn)
     dados.proximo_codigo += 1
-
-    print("\nLivro cadastrado com sucesso!")
+    salvar_livros(dados.livros)
+    print("\n Livro cadastrado com sucesso!")
     print(f"Código do livro: {codigo}")
 
     
