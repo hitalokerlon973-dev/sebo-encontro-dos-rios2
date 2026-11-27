@@ -71,13 +71,13 @@
     },
     {
         "codigo": 8,
-        "titulo": "A Bolsa Amarela",
-        "autor": "Lygia Bojunga",
-        "isbn": "9788589020023",
-        "genero": "Infantil",
-        "estado": "Ótimo",
-        "preco": 25.0,
-        "quantidade": 4
+        "titulo": "O Mundo de Sofia",
+        "autor": "Jostein Gaarder",
+        "isbn": "9788501051486",
+        "genero": "Outros",
+        "estado": "Bom",
+        "preco": 45.9,
+        "quantidade": 10
     },
     {
         "codigo": 9,

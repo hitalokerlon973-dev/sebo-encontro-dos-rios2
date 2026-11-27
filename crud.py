@@ -169,3 +169,116 @@ def buscar_livro():
         print(f"Conservação: {livro['estado']}")
         print(f"Preço: R$ {livro['preco']:.2f}")
         print(f"Quantidade: {livro['quantidade']}")
+
+
+def editar_livro():
+    """
+    Edita as informações de um livro cadastrado.
+    """
+    print("\n--- EDITAR LIVRO ---")
+
+    try:
+        codigo = int(input("Digite o código do livro: "))
+    except ValueError:
+        print("Erro: digite um código válido.")
+        return
+
+    livro = next(
+        (livro for livro in dados.livros if livro["codigo"] == codigo),
+        None
+    )
+
+    if livro is None:
+        print("Livro não encontrado.")
+        return
+
+    print("\nLivro encontrado!")
+    print(f"Título atual: {livro['titulo']}")
+    print(f"Autor atual: {livro['autor']}")
+
+    novo_titulo = input("Novo título (Enter para manter): ").strip()
+    if novo_titulo:
+        if not validar_texto(novo_titulo):
+            print("Título inválido.")
+            return
+        livro["titulo"] = novo_titulo
+
+    novo_autor = input("Novo autor (Enter para manter): ").strip()
+    if novo_autor:
+        if not validar_texto(novo_autor):
+            print("Autor inválido.")
+            return
+        livro["autor"] = novo_autor
+
+    novo_isbn = input("Novo ISBN (Enter para manter): ").strip()
+
+    if novo_isbn:
+        if not validar_isbn(novo_isbn):
+            print("Erro: ISBN deve possuir 13 dígitos.")
+            return
+
+        if novo_isbn in dados.isbns_cadastrados:
+            print("Erro: este ISBN já está cadastrado.")
+            return
+
+        dados.isbns_cadastrados.remove(livro["isbn"])
+        dados.isbns_cadastrados.add(novo_isbn)
+        livro["isbn"] = novo_isbn
+
+    print("\nGêneros disponíveis:")
+    for indice, genero in enumerate(dados.GENEROS, start=1):
+        print(f"{indice} - {genero}")
+
+    opcao = input("Novo gênero (Enter para manter): ").strip()
+
+    if opcao:
+        if not opcao.isdigit() or not 1 <= int(opcao) <= len(dados.GENEROS):
+            print("Gênero inválido.")
+            return
+        livro["genero"] = dados.GENEROS[int(opcao) - 1]
+
+    print("\nEstados de conservação:")
+    for indice, estado in enumerate(dados.estados_conservacao, start=1):
+        print(f"{indice} - {estado}")
+
+    opcao = input("Novo estado (Enter para manter): ").strip()
+
+    if opcao:
+        if not opcao.isdigit() or not 1 <= int(opcao) <= len(dados.estados_conservacao):
+            print("Estado inválido.")
+            return
+        livro["estado"] = dados.estados_conservacao[int(opcao) - 1]
+
+    novo_preco = input("Novo preço (Enter para manter): ").strip()
+
+    if novo_preco:
+        try:
+            preco = float(novo_preco.replace(",", "."))
+        except ValueError:
+            print("Preço inválido.")
+            return
+
+        if not validar_preco(preco):
+            print("O preço deve ser maior que zero.")
+            return
+
+        livro["preco"] = preco
+
+    nova_quantidade = input("Nova quantidade (Enter para manter): ").strip()
+
+    if nova_quantidade:
+        try:
+            quantidade = int(nova_quantidade)
+        except ValueError:
+            print("Quantidade inválida.")
+            return
+
+        if not validar_quantidade(quantidade):
+            print("A quantidade não pode ser negativa.")
+            return
+
+        livro["quantidade"] = quantidade
+
+    salvar_livros(dados.livros)
+
+    print("\nLivro atualizado com sucesso!")
